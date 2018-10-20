@@ -1,0 +1,146 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 47.597409
+  longitude: -122.039261
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 155
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Los_Angeles
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: CHANGEME
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+sensor:
+  platform: yr
+
+logger:
+  default: error
+  logs:
+    custom_components.light.magiclight_ble: info
+
+#switch:
+#  - platform: tplink
+#    host: hs100
+
+light:
+  - platform: magiclight_ble
+    devices:
+      80:30:DC:DA:7A:E8:
+        id: accent_light
+        name: Accent Light
+
+light 2:
+  - platform: rest
+    id: ring_light
+    name: Ring Light
+    resource: http://WiFiPixels-D657AA/light
+
+scene:
+  - name: Red Accent Light
+    entities:
+      light.accent_light:
+        state: on
+        rgb_color: [255, 0, 0]
+        brightness: 63
+  - name: Green Accent Light
+    entities:
+      light.accent_light:
+        state: on
+        rgb_color: [0, 255, 0]
+        brightness: 63
+  - name: Blue Accent Light
+    entities:
+      light.accent_light:
+        state: on
+        rgb_color: [0, 0, 255]
+        brightness: 63
+  - name: Purple Accent Light
+    entities:
+      light.accent_light:
+        state: on
+        rgb_color: [255, 0, 255]
+        brightness: 63
+  - name: Warm Accent Light
+    entities:
+      light.accent_light:
+        state: on
+        white_value: 31
+  - name: Movie Accent Light
+    entities:
+      light.accent_light:
+        state: off
+  - name: Red Ring Light
+    entities:
+      light.ring_light:
+        state: on
+        rgb_color: [255, 0, 0]
+        brightness: 255
+  - name: Green Ring Light
+    entities:
+      light.ring_light:
+        state: on
+        rgb_color: [0, 255, 0]
+        brightness: 255
+  - name: Blue Ring Light
+    entities:
+      light.ring_light:
+        state: on
+        rgb_color: [0, 0, 255]
+        brightness: 255
+  - name: Purple Ring Light
+    entities:
+      light.ring_light:
+        state: on
+        rgb_color: [255, 0, 255]
+        brightness: 255
+  - name: Warm Ring Light
+    entities:
+      light.ring_light:
+        state: on
+        white_value: 255
+  - name: Movie Ring Light
+    entities:
+      light.ring_light:
+        state: off
+
+emulated_hue:
+  off_maps_to_on_domains:
+    - script
+  expose_by_default: true
+  exposed_domains:
+    - light
+    - scene
+
+#customize:
+#  light.accent_light:
+#    emulated_hue_name: "Accent Light"
